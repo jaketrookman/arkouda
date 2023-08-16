@@ -117,8 +117,7 @@ class TestSeries:
 
     def test_topn(self):
         v = ak.arange(3)
-        i = ak.arange(3)
-        s = ak.Series(data=v, index=i)
+        s = ak.Series(data=v, index=v)
 
         top = s.topn(2)
         assert top.index.to_pandas().tolist() == [2, 1]
@@ -144,8 +143,7 @@ class TestSeries:
 
     def test_head_tail(self):
         v = ak.arange(5)
-        i = ak.arange(5)
-        s = ak.Series(data=v, index=i)
+        s = ak.Series(data=v, index=v)
 
         head = s.head(2)
         assert head.index.to_pandas().tolist() == [0, 1]
@@ -170,12 +168,10 @@ class TestSeries:
 
     def test_concat(self):
         v = ak.arange(5)
-        i = ak.arange(5)
-        s = ak.Series(data=v, index=i)
+        s = ak.Series(data=v, index=v)
 
         v = ak.arange(5, 11, 1)
-        i = ak.arange(5, 11, 1)
-        s2 = ak.Series(data=v, index=i)
+        s2 = ak.Series(data=v, index=v)
 
         c = ak.Series.concat([s, s2])
         assert c.index.to_pandas().tolist() == [i for i in range(11)]
@@ -195,12 +191,10 @@ class TestSeries:
 
     def test_pdconcat(self):
         v = ak.arange(5)
-        i = ak.arange(5)
-        s = ak.Series(data=v, index=i)
+        s = ak.Series(data=v, index=v)
 
         v = ak.arange(5, 11, 1)
-        i = ak.arange(5, 11, 1)
-        s2 = ak.Series(data=v, index=i)
+        s2 = ak.Series(data=v, index=v)
 
         c = ak.Series.pdconcat([s, s2])
         assert isinstance(c, pd.Series)
@@ -208,8 +202,7 @@ class TestSeries:
         assert c.values.tolist() == [i for i in range(11)]
 
         v = ak.arange(5, 10, 1)
-        i = ak.arange(5, 10, 1)
-        s2 = ak.Series(data=v, index=i)
+        s2 = ak.Series(data=v, index=v)
 
         df = ak.Series.pdconcat([s, s2], axis=1)
         assert isinstance(df, pd.DataFrame)
